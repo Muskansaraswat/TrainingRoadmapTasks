@@ -1,0 +1,16 @@
+SELECT 
+	CASE 
+	  WHEN cag_event.status='PROCESSED' THEN 
+	 	CASE
+			WHEN cag_task.task_status='TASK_OUTCOME_PROCESSED' THEN cag_action.action_status
+			ELSE cag_task.task_status
+		END
+	  ELSE cag_event.status
+	END AS current_state,
+    object_id,status,action_status,task_status FROM cag_event 
+	left join cag_event_task ON cag_event.id=cag_event_task.event_id 
+	left join cag_task ON cag_event_task.task_id=cag_task.id 
+	left join cag_task_action ON cag_task.id=cag_task_action.task_id 
+	left join cag_action ON cag_action.id=cag_task_action.action_id;
+
+This is edited text that you are looking for! 
